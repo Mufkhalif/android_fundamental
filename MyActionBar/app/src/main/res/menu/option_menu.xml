@@ -3,16 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search"
+        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
     <group android:menuCategory="container">
         <item
             android:id="@+id/menu1"
-            android:title="@string/menu_1"
             android:icon="@drawable/ic_baseline_announcement_24"
+            android:title="@string/menu_1"
             app:showAsAction="always" />
 
         <item
             android:id="@+id/menu2"
-            android:title="@string/menu_2"/>
+            android:title="@string/menu_2" />
     </group>
 
 </menu>

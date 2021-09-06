@@ -7,18 +7,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eac9c081-8b82-4830-9d87-7a580e40a9aa" name="Default Changelist" comment="add new structure">
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/MenuActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/MenuFragment.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_baseline_announcement_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/activity_menu.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/fragment_menu.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/menu/option_menu.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/CartFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/MainDrawerActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/gallery/GalleryFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/gallery/GalleryViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/home/HomeFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/home/HomeViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/slideshow/SlideshowFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/ui/slideshow/SlideshowViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_baseline_search_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_home.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_hotel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_menu_camera.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_menu_gallery.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_menu_slideshow.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_shopping_cart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/ic_subway.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/drawable/side_nav_bar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/activity_main_drawer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/app_bar_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/content_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/fragment_cart.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/fragment_gallery.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/fragment_slideshow.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/layout/nav_header_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/menu/activity_main_drawer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/menu/main_drawer.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/navigation/mobile_navigation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/java/com/example/myactionbar/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/menu/option_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/menu/option_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyActionBar/app/src/main/res/values/themes.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
