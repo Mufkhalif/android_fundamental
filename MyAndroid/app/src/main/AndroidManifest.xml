@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BarVolumn">
-        <activity android:name=".navigation.MainActivityNavigation"></activity>
+        <activity android:name=".navigation.MainActivityNavigation" />
         <activity android:name=".customview.MainActivityCv">
+        </activity>
+        <activity android:name=".testing.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".testing.MainActivity"></activity>
         <activity android:name=".debugging.MainActivity" />
         <activity android:name=".fragment.MainActivity" />
         <activity android:name=".intent.MoveForResultActivty" />
