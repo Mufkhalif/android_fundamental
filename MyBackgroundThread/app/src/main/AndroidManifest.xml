@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mybackgroundthread">
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyBackgroundThread">
+        <receiver
+            android:name=".service.SmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name=".service.SmsReceiverActivity"
+            android:theme="@style/Theme.Broadcast.SmsReceiver" />
+        <activity android:name=".service.MainBroadcasterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".service.MyBoundService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.MyIntentService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="true" />
+        <activity android:name=".service.MainServiceActivity">
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>
