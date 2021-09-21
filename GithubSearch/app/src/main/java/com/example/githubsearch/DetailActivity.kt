@@ -2,7 +2,6 @@ package com.example.githubsearch
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -39,6 +38,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val username = intent.getStringExtra(EXTRA_USERNAME);
         if (username != null) {
@@ -59,6 +59,9 @@ class DetailActivity : AppCompatActivity() {
             tvName.text = user.name
             tvCompany.text = user.company
             tvLocation.text = user.location
+            tvRepository.text = user.publicRepos.toString()
+            tvFollower.text = user.followers.toString()
+            tvFollowing.text = user.following.toString()
             Glide.with(this@DetailActivity)
                 .load(user.avatarUrl)
                 .into(ivAvatar)

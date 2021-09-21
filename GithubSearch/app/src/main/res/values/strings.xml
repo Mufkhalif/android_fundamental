@@ -12,10 +12,14 @@
     <string name="section_following">Following</string>
     <string name="tab_text_1">Followers</string>
     <string name="tab_text_2">Following</string>
-    <string name="location">Location</string>
     <string name="name">Name</string>
     <string name="company">Company</string>
     <string name="tidak_ada_followers">Tidak ada Followers</string>
     <string name="tidak_ada_following">Tidak ada Following</string>
     <string name="tidak_ada_user">User tidak ditemukan</string>
+    <string name="current_company">Google developer</string>
+    <string name="location">Location</string>
+    <string name="repository">Repository</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
 </resources>

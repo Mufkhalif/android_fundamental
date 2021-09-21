@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val layoutManager = LinearLayoutManager(this)
         binding.rvSearch.layoutManager = layoutManager
 
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isLoading.observe(this, {
             showLoading(it)
         })
+
     }
 
     private fun setSearchData(users: List<User>) {

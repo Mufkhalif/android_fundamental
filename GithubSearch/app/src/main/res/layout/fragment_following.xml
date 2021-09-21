@@ -9,7 +9,9 @@
         android:id="@+id/rvUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_search" />
+        tools:listitem="@layout/item_search"
+        android:scrollbars="none"
+        android:nestedScrollingEnabled="false"/>
 
     <LinearLayout
         android:id="@+id/shimmer"
