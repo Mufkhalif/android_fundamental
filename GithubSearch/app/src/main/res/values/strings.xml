@@ -22,4 +22,5 @@
     <string name="repository">Repository</string>
     <string name="follower">Follower</string>
     <string name="following">Following</string>
+    <string name="main_app">Github</string>
 </resources>
