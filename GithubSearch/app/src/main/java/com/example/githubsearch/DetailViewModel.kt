@@ -9,21 +9,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel : ViewModel() {
-
-    companion object {
-        private const val TAG = "DetailViewModel"
-    }
-
-    private val _detailUser = MutableLiveData<ResponseDetail>();
+    private val _detailUser = MutableLiveData<ResponseDetail>()
     val detailUser: LiveData<ResponseDetail> = _detailUser
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _followers = MutableLiveData<List<User>>();
+    private val _followers = MutableLiveData<List<User>>()
     val followers: LiveData<List<User>> = _followers
 
-    private val _following = MutableLiveData<List<User>>();
+    private val _following = MutableLiveData<List<User>>()
     val following: LiveData<List<User>> = _following
 
     private val _isLoadingFollowing = MutableLiveData<Boolean>()
@@ -116,5 +111,9 @@ class DetailViewModel : ViewModel() {
 
         })
 
+    }
+
+    companion object {
+        private const val TAG = "DetailViewModel"
     }
 }

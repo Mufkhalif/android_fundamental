@@ -11,9 +11,9 @@ import com.example.githubsearch.databinding.FragmentFollowersBinding
 
 
 class FollowersFragment : Fragment() {
-    private var _binding: FragmentFollowersBinding? = null
+    private lateinit var _binding: FragmentFollowersBinding
     private val detailViewModel: DetailViewModel by activityViewModels()
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +36,6 @@ class FollowersFragment : Fragment() {
             showLoading(loading)
         })
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setData(users: List<User>) {

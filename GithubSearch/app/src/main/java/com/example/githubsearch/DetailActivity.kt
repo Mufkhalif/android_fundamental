@@ -10,16 +10,6 @@ import com.example.githubsearch.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_USERNAME = "extra_username"
-
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
-            R.string.tab_text_1,
-            R.string.tab_text_2
-        )
-    }
-
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -62,6 +52,8 @@ class DetailActivity : AppCompatActivity() {
             tvRepository.text = user.publicRepos.toString()
             tvFollower.text = user.followers.toString()
             tvFollowing.text = user.following.toString()
+            tvUsername.text = user.login
+
             Glide.with(this@DetailActivity)
                 .load(user.avatarUrl)
                 .into(ivAvatar)
@@ -70,5 +62,15 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_text_1,
+            R.string.tab_text_2
+        )
     }
 }

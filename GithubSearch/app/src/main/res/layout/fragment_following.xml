@@ -6,7 +6,6 @@
     tools:context=".FollowingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_search"
@@ -14,7 +13,6 @@
         android:nestedScrollingEnabled="false"/>
 
     <LinearLayout
-        android:id="@+id/shimmer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -23,7 +21,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
