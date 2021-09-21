@@ -10,6 +10,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel : ViewModel() {
+
+    companion object {
+        private const val TAG = "MainViewModel"
+        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
+    }
+
     private val _restaurant = MutableLiveData<Restaurant>()
     val restaurant: LiveData<Restaurant> = _restaurant
 
@@ -19,10 +25,9 @@ class MainViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    companion object {
-        private const val TAG = "MainViewModel"
-        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
-    }
+    private val _snackbarText = MutableLiveData<Event<String>>()
+    val snackbarText: LiveData<Event<String>> = _snackbarText
+
 
     init {
         findRestaurant()
@@ -69,6 +74,7 @@ class MainViewModel : ViewModel() {
                 val responseBody = response.body()
                 if (response.isSuccessful && responseBody != null) {
                     _listReview.value = responseBody.customerReviews
+                    _snackbarText.value = Event(responseBody.message)
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -82,6 +88,7 @@ class MainViewModel : ViewModel() {
         })
 
     }
+
 
 
 }
