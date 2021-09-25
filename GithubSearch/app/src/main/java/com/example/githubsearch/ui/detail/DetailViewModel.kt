@@ -1,14 +1,20 @@
-package com.example.githubsearch
+package com.example.githubsearch.ui.detail
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubsearch.api.ResponseDetail
+import com.example.githubsearch.api.User
+import com.example.githubsearch.api.ApiConfig
+import com.example.githubsearch.database.UserFavourite
+import com.example.githubsearch.database.UserFavouriteRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(application: Application) : ViewModel() {
     private val _detailUser = MutableLiveData<ResponseDetail>()
     val detailUser: LiveData<ResponseDetail> = _detailUser
 
@@ -26,6 +32,21 @@ class DetailViewModel : ViewModel() {
 
     private val _isLoadingFollowers = MutableLiveData<Boolean>()
     val isLoadingFollowers: LiveData<Boolean> = _isLoadingFollowers
+
+    private val mUserFavouriteRepository: UserFavouriteRepository =
+        UserFavouriteRepository(application)
+
+    fun insert(user: UserFavourite) {
+        mUserFavouriteRepository.insert(user)
+    }
+
+    fun delete(user: UserFavourite) {
+        mUserFavouriteRepository.delete(user)
+    }
+
+    fun checkIsFavourite(username: String?): LiveData<List<UserFavourite>> {
+        return mUserFavouriteRepository.getUserFavouriteByUsername(username)
+    }
 
     fun setDetailUser(username: String) {
         getDetailUser(username)

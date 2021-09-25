@@ -1,9 +1,10 @@
-package com.example.githubsearch
+package com.example.githubsearch.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.githubsearch.api.User
 import com.example.githubsearch.databinding.ItemSearchBinding
 
 class ListUserAdapter(private val listSearch: List<User>) :

@@ -1,4 +1,4 @@
-package com.example.githubsearch
+package com.example.githubsearch.api
 
 import retrofit2.Call
 import retrofit2.http.GET

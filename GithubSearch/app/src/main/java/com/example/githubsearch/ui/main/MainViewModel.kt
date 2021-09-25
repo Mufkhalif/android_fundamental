@@ -1,9 +1,12 @@
-package com.example.githubsearch
+package com.example.githubsearch.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubsearch.api.ResponseSearchUser
+import com.example.githubsearch.api.User
+import com.example.githubsearch.api.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +19,7 @@ class MainViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> = _isLoading
 
     init {
-        searchUser("ahmad")
+        searchUser("mufkhalif")
     }
 
     fun searchUser(query: String) {

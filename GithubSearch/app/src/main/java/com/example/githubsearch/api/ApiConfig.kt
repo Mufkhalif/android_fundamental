@@ -1,4 +1,4 @@
-package com.example.githubsearch
+package com.example.githubsearch.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

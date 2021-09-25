@@ -1,4 +1,4 @@
-package com.example.githubsearch
+package com.example.githubsearch.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -6,12 +6,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubsearch.adapter.ListUserAdapter
+import com.example.githubsearch.R
+import com.example.githubsearch.api.User
+import com.example.githubsearch.database.UserFavourite
 import com.example.githubsearch.databinding.ActivityMainBinding
+import com.example.githubsearch.ui.detail.DetailActivity
+import com.example.githubsearch.ui.favourite.FavouriteActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -51,6 +58,13 @@ class MainActivity : AppCompatActivity() {
                     override fun onItemClicked(data: User) {
                         val detailIntent = Intent(this@MainActivity, DetailActivity::class.java)
                         detailIntent.putExtra(DetailActivity.EXTRA_USERNAME, data.login)
+
+                        val userFavourite = UserFavourite(
+                            id = data.id,
+                            login = data.login,
+                            avatarUrl = data.avatarUrl
+                        )
+                        detailIntent.putExtra(DetailActivity.EXTRA_USER, userFavourite)
                         startActivity(detailIntent)
                     }
                 })
@@ -87,6 +101,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favourite_list -> {
+                val favouriteIntent = Intent(this@MainActivity,FavouriteActivity::class.java)
+                startActivity(favouriteIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

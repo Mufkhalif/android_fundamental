@@ -1,4 +1,4 @@
-package com.example.githubsearch
+package com.example.githubsearch.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubsearch.databinding.FragmentFollowersBinding
+import com.example.githubsearch.adapter.ListUserAdapter
+import com.example.githubsearch.api.User
+import com.example.githubsearch.databinding.FragmentFollowingBinding
 
 
-class FollowersFragment : Fragment() {
-    private lateinit var _binding: FragmentFollowersBinding
+class FollowingFragment : Fragment() {
+    private lateinit var _binding: FragmentFollowingBinding
     private val detailViewModel: DetailViewModel by activityViewModels()
     private val binding get() = _binding
 
@@ -19,7 +21,7 @@ class FollowersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFollowersBinding.inflate(inflater, container, false)
+        _binding = FragmentFollowingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -27,16 +29,15 @@ class FollowersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvUser.layoutManager = LinearLayoutManager(activity)
-
-        detailViewModel.followers.observe(viewLifecycleOwner, { followers ->
-            setData(followers)
+        detailViewModel.following.observe(viewLifecycleOwner, { following ->
+            setData(following)
         })
 
-        detailViewModel.isLoadingFollowers.observe(viewLifecycleOwner, { loading ->
+        detailViewModel.isLoadingFollowing.observe(viewLifecycleOwner, { loading ->
             showLoading(loading)
         })
-
     }
+
 
     private fun setData(users: List<User>) {
         with(binding) {
