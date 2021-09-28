@@ -1,6 +1,5 @@
 package com.example.githubsearch.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,15 +10,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
     private val _listSearch = MutableLiveData<List<User>>()
     val listSearch: LiveData<List<User>> = _listSearch
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _snackbarText = MutableLiveData<String>()
+    val snackbarText: LiveData<String> = _snackbarText
+
     init {
-        searchUser("mufkhalif")
+        searchUser("agus")
     }
 
     fun searchUser(query: String) {
@@ -36,13 +38,13 @@ class MainViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _listSearch.value = response.body()?.items
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    _snackbarText.value = "onFailure: ${response.message()}"
                 }
             }
 
             override fun onFailure(call: Call<ResponseSearchUser>, t: Throwable) {
                 _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _snackbarText.value = "onFailure: ${t.message.toString()}"
             }
         })
     }
@@ -50,4 +52,5 @@ class MainViewModel : ViewModel() {
     companion object {
         private const val TAG = "MainViewModel"
     }
+
 }

@@ -33,6 +33,7 @@ class FavouriteActivity : AppCompatActivity() {
         binding.rvFavourite.setHasFixedSize(true)
         binding.rvFavourite.adapter = adapater
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
 

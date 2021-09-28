@@ -16,4 +16,6 @@
     <string name="following">Following</string>
     <string name="main_app">Github</string>
     <string name="todo">TODO</string>
+    <string name="ic_favourite">ic_favourite</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

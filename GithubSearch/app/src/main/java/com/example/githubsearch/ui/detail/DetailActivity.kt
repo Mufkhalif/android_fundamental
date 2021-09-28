@@ -2,10 +2,8 @@ package com.example.githubsearch.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -17,23 +15,22 @@ import com.example.githubsearch.databinding.ActivityDetailBinding
 import com.example.githubsearch.helper.ViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var detailViewModel: DetailViewModel
     private var userFavourite: UserFavourite? = null
-    private var favIcon: MenuItem? = null
     private var isFavourite: Boolean = false
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_USER = "extra_user"
-        const val TAG = "DetailActivity"
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text_1,
             R.string.tab_text_2
         )
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,20 +47,26 @@ class DetailActivity : AppCompatActivity() {
             }.attach()
         }
 
-        supportActionBar?.elevation = 0f
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val username = intent.getStringExtra(EXTRA_USERNAME);
         userFavourite = intent.getParcelableExtra(EXTRA_USER)
+
         detailViewModel = obtainViewModel(this@DetailActivity)
 
         if (username != null) {
             detailViewModel.setDetailUser(username)
         }
 
+        userFavourite?.let { detailViewModel.setDataUserNow(it) }
+
         detailViewModel.checkIsFavourite(username).observe(this, { listUser ->
+            detailViewModel.setIsFav(listUser.isNotEmpty())
             isFavourite = listUser.isNotEmpty()
-            favIcon?.setIcon(if (isFavourite) R.drawable.ic_favourite_red else R.drawable.ic_favorite)
+        })
+
+        detailViewModel.isFav.observe(this, {
+            binding.btnFavourite.setImageResource(if (it) R.drawable.ic_star else R.drawable.ic_star_basic)
+            isFavourite = it
         })
 
         detailViewModel.detailUser.observe(this, { user ->
@@ -74,6 +77,23 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         })
 
+        detailViewModel.isUserFavourite.observe(this, {
+            userFavourite = it
+        })
+
+        detailViewModel.snackbarText.observe(this, {
+            Toast.makeText(
+                this,
+                it,
+                Toast.LENGTH_SHORT
+            ).show()
+        })
+
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = username
+
+        binding.btnFavourite.setOnClickListener(this)
     }
 
 
@@ -102,28 +122,23 @@ class DetailActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory).get(DetailViewModel::class.java)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_detail, menu)
-        favIcon = menu.findItem(R.id.favourite)
-
-        return super.onCreateOptionsMenu(menu)
+    private fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.favourite -> {
-                if (isFavourite) {
-                    userFavourite?.let { detailViewModel.delete(it) }
-                } else {
-                    userFavourite?.let { detailViewModel.insert(it) }
-                }
-
-                isFavourite = !isFavourite
-                favIcon?.setIcon(if (isFavourite) R.drawable.ic_favourite_red else R.drawable.ic_favorite)
+    override fun onClick(v: View) {
+        if (v.id == R.id.btnFavourite) {
+            if (isFavourite) {
+                userFavourite?.let { detailViewModel.delete(it) }
+                showMessage("Berhasil menghapus dari favourite")
+                detailViewModel.setIsFav(false)
+            } else {
+                userFavourite?.let { detailViewModel.insert(it) }
+                showMessage("Berhasil menambah ke favourite")
+                detailViewModel.setIsFav(true)
             }
+            binding.btnFavourite.setImageResource(if (isFavourite) R.drawable.ic_star else R.drawable.ic_star_basic)
         }
-        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.adapter.ListUserAdapter
 import com.example.githubsearch.api.User
+import com.example.githubsearch.database.UserFavourite
 import com.example.githubsearch.databinding.FragmentFollowersBinding
 
 
@@ -38,6 +39,7 @@ class FollowersFragment : Fragment() {
             showLoading(loading)
         })
 
+
     }
 
     private fun setData(users: List<User>) {
@@ -55,6 +57,17 @@ class FollowersFragment : Fragment() {
                 adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: User) {
                         detailViewModel.setDetailUser(data.login)
+
+                        val userFavourite = UserFavourite(
+                            id = data.id,
+                            login = data.login,
+                            avatarUrl = data.avatarUrl
+                        )
+                        detailViewModel.setDataUserNow(userFavourite)
+                        detailViewModel.checkIsFavourite(data.login)
+                            .observe(viewLifecycleOwner, { listUser ->
+                                detailViewModel.setIsFav(listUser.isNotEmpty())
+                            })
                     }
                 })
             }

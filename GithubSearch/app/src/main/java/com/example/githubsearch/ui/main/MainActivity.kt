@@ -19,6 +19,8 @@ import com.example.githubsearch.database.UserFavourite
 import com.example.githubsearch.databinding.ActivityMainBinding
 import com.example.githubsearch.ui.detail.DetailActivity
 import com.example.githubsearch.ui.favourite.FavouriteActivity
+import com.example.githubsearch.ui.settings.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -34,6 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.listSearch.observe(this, { users ->
             setSearchData(users)
+        })
+
+        mainViewModel.snackbarText.observe(this, {
+            Toast.makeText(
+                this,
+                it,
+                Toast.LENGTH_SHORT
+            ).show()
         })
 
         mainViewModel.isLoading.observe(this, {
@@ -104,10 +114,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.favourite_list -> {
-                val favouriteIntent = Intent(this@MainActivity,FavouriteActivity::class.java)
+                val favouriteIntent = Intent(this@MainActivity, FavouriteActivity::class.java)
                 startActivity(favouriteIntent)
+            }
+            R.id.settings -> {
+                val settingsIntent = Intent(this@MainActivity, SettingsActivity::class.java)
+                startActivity(settingsIntent)
             }
         }
         return super.onOptionsItemSelected(item)

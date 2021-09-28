@@ -1,7 +1,6 @@
 package com.example.githubsearch.ui.detail
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +14,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel(application: Application) : ViewModel() {
+
+    companion object {
+        private const val TAG = "DetailViewModel"
+    }
+
     private val _detailUser = MutableLiveData<ResponseDetail>()
     val detailUser: LiveData<ResponseDetail> = _detailUser
+
+    private val _snackbarText = MutableLiveData<String>()
+    val snackbarText: LiveData<String> = _snackbarText
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -33,6 +40,12 @@ class DetailViewModel(application: Application) : ViewModel() {
     private val _isLoadingFollowers = MutableLiveData<Boolean>()
     val isLoadingFollowers: LiveData<Boolean> = _isLoadingFollowers
 
+    private val _isFav = MutableLiveData<Boolean>()
+    val isFav: LiveData<Boolean> = _isFav
+
+    private val _isUserFavourite = MutableLiveData<UserFavourite>()
+    val isUserFavourite: LiveData<UserFavourite> = _isUserFavourite
+
     private val mUserFavouriteRepository: UserFavouriteRepository =
         UserFavouriteRepository(application)
 
@@ -42,6 +55,14 @@ class DetailViewModel(application: Application) : ViewModel() {
 
     fun delete(user: UserFavourite) {
         mUserFavouriteRepository.delete(user)
+    }
+
+    fun setIsFav(value: Boolean) {
+        _isFav.value = value
+    }
+
+    fun setDataUserNow(user: UserFavourite) {
+        _isUserFavourite.value = user
     }
 
     fun checkIsFavourite(username: String?): LiveData<List<UserFavourite>> {
@@ -68,13 +89,13 @@ class DetailViewModel(application: Application) : ViewModel() {
                 if (response.isSuccessful) {
                     _detailUser.value = response.body()
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    _snackbarText.value = "onFailure: ${response.message()}"
                 }
             }
 
             override fun onFailure(call: Call<ResponseDetail>, t: Throwable) {
                 _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _snackbarText.value = "onFailure: ${t.message.toString()}"
             }
 
         })
@@ -95,13 +116,13 @@ class DetailViewModel(application: Application) : ViewModel() {
                 if (response.isSuccessful) {
                     _followers.value = response.body()
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    _snackbarText.value = "onFailure: ${response.message()}"
                 }
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 _isLoadingFollowers.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _snackbarText.value = "onFailure: ${t.message.toString()}"
             }
         })
 
@@ -121,20 +142,15 @@ class DetailViewModel(application: Application) : ViewModel() {
                 if (response.isSuccessful) {
                     _following.value = response.body()
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+                    _snackbarText.value = "onFailure: ${response.message()}"
                 }
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 _isLoadingFollowing.value = true
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+                _snackbarText.value = "onFailure: ${t.message.toString()}"
             }
 
         })
-
-    }
-
-    companion object {
-        private const val TAG = "DetailViewModel"
     }
 }
