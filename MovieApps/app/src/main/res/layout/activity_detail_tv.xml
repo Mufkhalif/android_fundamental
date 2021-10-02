@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.tv.DetailTvActivity">
+
+    <ImageView
+        android:id="@+id/cv_poster"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:scaleType="centerCrop"
+        android:src="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/cv_poster"
+        app:layout_constraintStart_toStartOf="@+id/cv_poster"
+        app:layout_constraintTop_toBottomOf="@+id/cv_poster"
+        tools:text="@string/title"
+        android:paddingHorizontal="12dp"/>
+
+    <TextView
+        android:id="@+id/text_rating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@android:color/holo_orange_dark"
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:text="@string/rating"
+        android:paddingHorizontal="12dp"/>
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/text_rating"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:text="@string/date" />
+
+    <TextView
+        android:id="@+id/text_vote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/text_date"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:text="@string/vote" />
+
+    <TextView
+        android:id="@+id/text_overview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/cv_poster"
+        app:layout_constraintStart_toStartOf="@+id/text_rating"
+        app:layout_constraintTop_toBottomOf="@+id/text_rating"
+        tools:text="@string/overview"
+        android:paddingHorizontal="12dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
