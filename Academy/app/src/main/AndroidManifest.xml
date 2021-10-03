@@ -10,8 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Academy"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/Theme.Academy">
         <activity
             android:name="com.example.academy.ui.detail.DetailCourseActivity"
             android:label="@string/title_activity_detail_course"
@@ -22,10 +21,11 @@
                 android:value="com.example.academy.ui.home.HomeActivity" />
         </activity>
         <activity android:name=".ui.reader.CourseReaderActivity" />
-        <activity android:name="com.example.academy.ui.home.HomeActivity">
+        <activity
+            android:name="com.example.academy.ui.home.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
