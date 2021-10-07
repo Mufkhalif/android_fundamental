@@ -1,25 +1,12 @@
 package com.example.movieapps.ui.detail.tv
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.movieapps.data.TvEntity
-import com.example.movieapps.utils.DataDummy
+import com.example.movieapps.api.model.Tv
+import com.example.movieapps.data.remote.MovieRepositorySecond
 
-class DetailTvViewModel : ViewModel() {
-    private lateinit var id: String
+class DetailTvViewModel(private val movieRepository: MovieRepositorySecond) : ViewModel() {
 
-    fun setCurrentId(id: String) {
-        this.id = id
-    }
-
-    fun getTvDetail(): TvEntity {
-        lateinit var tv: TvEntity
-        val listTv = DataDummy.generateTvs()
-        for (tvEntity in listTv) {
-            if (tvEntity.id == id) {
-                tv = tvEntity
-            }
-        }
-        return tv
-    }
+    fun getTvDetail(id: String): LiveData<Tv> = movieRepository.getDetailTv(id)
 
 }

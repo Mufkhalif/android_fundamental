@@ -1,15 +1,18 @@
 package com.example.movieapps.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.example.movieapps.R
 import com.example.movieapps.utils.DataDummy
-import org.junit.Rule
+import com.example.movieapps.utils.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 
 class HomeActivityTest {
@@ -18,8 +21,17 @@ class HomeActivityTest {
     private val dummyTv = DataDummy.generateTvs()
     private val tv = dummyTv[0]
 
-    @get:Rule
-    var activityRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @Before
+    fun setup() {
+        ActivityScenario.launch(HomeActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResorce)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResorce)
+    }
 
     @Test
     fun loadMovies() {
@@ -37,6 +49,7 @@ class HomeActivityTest {
                 click()
             )
         )
+
         onView(withId(R.id.text_title)).check(matches(isDisplayed()))
         onView(withId(R.id.text_title)).check(matches(withText(movie.title)))
 
@@ -47,10 +60,10 @@ class HomeActivityTest {
         onView(withId(R.id.text_overview)).check(matches(withText(movie.overview)))
 
         onView(withId(R.id.text_date)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_date)).check(matches(withText(movie.releaseDate)))
+        onView(withId(R.id.text_date)).check(matches(withText(movie.release_date)))
 
         onView(withId(R.id.text_vote)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_vote)).check(matches(withText(movie.voteCount.toString())))
+        onView(withId(R.id.text_vote)).check(matches(withText(movie.vote_count.toString())))
     }
 
     @Test
@@ -82,10 +95,10 @@ class HomeActivityTest {
         onView(withId(R.id.text_overview)).check(matches(withText(tv.overview)))
 
         onView(withId(R.id.text_date)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_date)).check(matches(withText(tv.firstAirDate)))
+        onView(withId(R.id.text_date)).check(matches(withText(tv.first_air_date)))
 
         onView(withId(R.id.text_vote)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_vote)).check(matches(withText(tv.voteCount.toString())))
+        onView(withId(R.id.text_vote)).check(matches(withText(tv.vote_count.toString())))
     }
 
 }

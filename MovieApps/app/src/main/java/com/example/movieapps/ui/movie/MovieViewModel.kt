@@ -1,9 +1,10 @@
 package com.example.movieapps.ui.movie
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.movieapps.data.MovieEntity
-import com.example.movieapps.utils.DataDummy
+import com.example.movieapps.api.response.ResponseMovie
+import com.example.movieapps.data.remote.MovieRepositorySecond
 
-class MovieViewModel : ViewModel() {
-    fun getMovies(): List<MovieEntity> = DataDummy.generateDummyMovies()
+class MovieViewModel(private val movieRepository: MovieRepositorySecond) : ViewModel() {
+    fun getMovies(): LiveData<ResponseMovie> = movieRepository.getMovies()
 }

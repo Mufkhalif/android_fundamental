@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:scaleType="centerCrop"
-        android:src="@color/teal_200"
+        android:src="@color/placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,24 +23,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
+        android:paddingHorizontal="12dp"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/cv_poster"
         app:layout_constraintStart_toStartOf="@+id/cv_poster"
         app:layout_constraintTop_toBottomOf="@+id/cv_poster"
-        tools:text="@string/title"
-        android:paddingHorizontal="12dp"/>
+        tools:text="@string/title" />
 
     <TextView
         android:id="@+id/text_rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:paddingHorizontal="12dp"
         android:textColor="@android:color/holo_orange_dark"
         app:layout_constraintStart_toStartOf="@+id/text_title"
         app:layout_constraintTop_toBottomOf="@+id/text_title"
-        tools:text="@string/rating"
-        android:paddingHorizontal="12dp"/>
+        tools:text="@string/rating" />
 
     <TextView
         android:id="@+id/text_date"
@@ -67,10 +67,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:paddingHorizontal="12dp"
         app:layout_constraintEnd_toEndOf="@+id/cv_poster"
         app:layout_constraintStart_toStartOf="@+id/text_rating"
         app:layout_constraintTop_toBottomOf="@+id/text_rating"
-        tools:text="@string/overview"
-        android:paddingHorizontal="12dp"/>
+        tools:text="@string/overview" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

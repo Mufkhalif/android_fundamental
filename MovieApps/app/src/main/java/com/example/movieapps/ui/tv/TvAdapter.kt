@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapps.R
-import com.example.movieapps.data.TvEntity
+import com.example.movieapps.api.Constants
+import com.example.movieapps.api.model.Tv
 import com.example.movieapps.databinding.ItemTvBinding
 import com.example.movieapps.ui.detail.tv.DetailTvActivity
 
 class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
-    private val listTv = ArrayList<TvEntity>()
+    private val listTv = ArrayList<Tv>()
 
-    fun setListTv(tv: List<TvEntity>) {
-        if (tv == null) return
+    fun setListTv(tv: List<Tv>) {
         this.listTv.clear()
         this.listTv.addAll(tv)
     }
@@ -33,7 +33,7 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
     override fun getItemCount(): Int = listTv.size
 
     class TvViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tv: TvEntity) {
+        fun bind(tv: Tv) {
             with(binding) {
                 tvItemTitle.text = tv.name
                 tvPopularity.text = tv.popularity.toString()
@@ -41,12 +41,12 @@ class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailTvActivity::class.java)
-                intent.putExtra(DetailTvActivity.EXTRA_TV, tv.id)
+                intent.putExtra(DetailTvActivity.EXTRA_TV, tv.id.toString())
                 itemView.context.startActivity(intent)
             }
 
             Glide.with(itemView.context)
-                .load(tv.posterPath)
+                .load("${Constants.baseImageUrl}${tv.poster_path}")
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                 .error(R.drawable.ic_error)
                 .into(binding.imgPoster)

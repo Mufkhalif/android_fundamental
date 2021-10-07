@@ -2,18 +2,18 @@ package com.example.movieapps.ui.detail.tv
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapps.R
-import com.example.movieapps.data.TvEntity
+import com.example.movieapps.api.Constants
+import com.example.movieapps.api.model.Tv
 import com.example.movieapps.databinding.ActivityDetailTvBinding
+import com.example.movieapps.viewmodel.ViewModelFactory
 
 class DetailTvActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_TV = "extra_tv"
-    }
 
     private lateinit var detailTvActivity: ActivityDetailTvBinding
 
@@ -22,19 +22,19 @@ class DetailTvActivity : AppCompatActivity() {
         detailTvActivity = ActivityDetailTvBinding.inflate(layoutInflater)
         setContentView(detailTvActivity.root)
 
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[DetailTvViewModel::class.java]
-
+        val viewModel = obtainViewModel(this@DetailTvActivity)
         val extras = intent.extras
 
         if (extras != null) {
             val tvId = extras.getString(EXTRA_TV)
             if (tvId != null) {
-                viewModel.setCurrentId(tvId)
-                val movie = viewModel.getTvDetail()
-                setRenderContent(movie)
+                detailTvActivity.progressBar.visibility = View.VISIBLE
+                viewModel.getTvDetail(tvId).observe(this, { tv ->
+                    if (tv != null) {
+                        setRenderContent(tv)
+                    }
+                    detailTvActivity.progressBar.visibility = View.GONE
+                })
             }
         }
 
@@ -42,20 +42,29 @@ class DetailTvActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setRenderContent(tv: TvEntity) {
+    private fun obtainViewModel(activity: AppCompatActivity): DetailTvViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(DetailTvViewModel::class.java)
+    }
+
+    private fun setRenderContent(tv: Tv) {
         with(detailTvActivity) {
             textTitle.text = tv.name
-            textDate.text = tv.firstAirDate
+            textDate.text = tv.first_air_date
             textRating.text = tv.popularity.toString()
             textOverview.text = tv.overview
-            textVote.text = tv.voteCount.toString()
+            textVote.text = tv.vote_count.toString()
         }
 
         Glide.with(this)
-            .load(tv.posterPath)
+            .load("${Constants.baseImageUrl}${tv.poster_path}")
             .transform(RoundedCorners(20))
             .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
             .error(R.drawable.ic_error)
             .into(detailTvActivity.cvPoster)
+    }
+
+    companion object {
+        const val EXTRA_TV = "extra_tv"
     }
 }

@@ -2,19 +2,18 @@ package com.example.movieapps.ui.detail.movie
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapps.R
-import com.example.movieapps.data.MovieEntity
+import com.example.movieapps.api.Constants
+import com.example.movieapps.api.model.Movie
 import com.example.movieapps.databinding.ActivityDetailMovieBinding
+import com.example.movieapps.viewmodel.ViewModelFactory
 
 class DetailMovieActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_MOVIE = "extra_movie"
-    }
-
     private lateinit var detailMovieBinding: ActivityDetailMovieBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,19 +21,19 @@ class DetailMovieActivity : AppCompatActivity() {
         detailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
         setContentView(detailMovieBinding.root)
 
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[DetailMovieViewModel::class.java]
-
+        val viewModel = obtainViewModel(this@DetailMovieActivity)
         val extras = intent.extras
 
         if (extras != null) {
             val movieId = extras.getString(EXTRA_MOVIE)
             if (movieId != null) {
-                viewModel.setSelectedMovie(movieId)
-                val movie = viewModel.getMovie()
-                setRenderContent(movie)
+                detailMovieBinding.progressBar.visibility = View.VISIBLE
+                viewModel.getDetailMovie(movieId).observe(this, { movie ->
+                    if (movie != null) {
+                        setRenderContent(movie)
+                    }
+                    detailMovieBinding.progressBar.visibility = View.GONE
+                })
             }
         }
 
@@ -42,20 +41,30 @@ class DetailMovieActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setRenderContent(movie: MovieEntity) {
+    private fun obtainViewModel(activity: AppCompatActivity): DetailMovieViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(DetailMovieViewModel::class.java)
+    }
+
+    private fun setRenderContent(movie: Movie) {
         with(detailMovieBinding) {
             textTitle.text = movie.title
-            textDate.text = movie.releaseDate
+            textDate.text = movie.release_date
             textRating.text = movie.popularity.toString()
             textOverview.text = movie.overview
-            textVote.text = movie.voteCount.toString()
+            textVote.text = movie.vote_count.toString()
         }
 
         Glide.with(this)
-            .load(movie.posterPath)
+            .load("${Constants.baseImageUrl}${movie.poster_path}")
             .transform(RoundedCorners(20))
             .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
             .error(R.drawable.ic_error)
             .into(detailMovieBinding.cvPoster)
     }
+
+    companion object {
+        const val EXTRA_MOVIE = "extra_movie"
+    }
+
 }
