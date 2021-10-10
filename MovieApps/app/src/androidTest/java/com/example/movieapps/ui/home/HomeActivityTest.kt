@@ -17,9 +17,7 @@ import org.junit.Test
 
 class HomeActivityTest {
     private val dummyMovies = DataDummy.generateDummyMovies()
-    private val movie = dummyMovies[0]
     private val dummyTv = DataDummy.generateTvs()
-    private val tv = dummyTv[0]
 
 
     @Before
@@ -51,19 +49,10 @@ class HomeActivityTest {
         )
 
         onView(withId(R.id.text_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_title)).check(matches(withText(movie.title)))
-
         onView(withId(R.id.text_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_rating)).check(matches(withText(movie.popularity.toString())))
-
         onView(withId(R.id.text_overview)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_overview)).check(matches(withText(movie.overview)))
-
         onView(withId(R.id.text_date)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_date)).check(matches(withText(movie.release_date)))
-
         onView(withId(R.id.text_vote)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_vote)).check(matches(withText(movie.vote_count.toString())))
     }
 
     @Test
@@ -86,19 +75,10 @@ class HomeActivityTest {
             )
         )
         onView(withId(R.id.text_title)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_title)).check(matches(withText(tv.name)))
-
         onView(withId(R.id.text_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_rating)).check(matches(withText(tv.popularity.toString())))
-
         onView(withId(R.id.text_overview)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_overview)).check(matches(withText(tv.overview)))
-
         onView(withId(R.id.text_date)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_date)).check(matches(withText(tv.first_air_date)))
-
         onView(withId(R.id.text_vote)).check(matches(isDisplayed()))
-        onView(withId(R.id.text_vote)).check(matches(withText(tv.vote_count.toString())))
     }
 
 }
