@@ -1,9 +1,14 @@
 package com.dicoding.academies.ui.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +21,7 @@ import com.dicoding.academies.databinding.ActivityDetailCourseBinding
 import com.dicoding.academies.databinding.ContentDetailCourseBinding
 import com.dicoding.academies.ui.reader.CourseReaderActivity
 import com.dicoding.academies.viewmodel.ViewModelFactory
+import com.dicoding.academies.vo.Status
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -23,12 +29,15 @@ class DetailCourseActivity : AppCompatActivity() {
         const val EXTRA_COURSE = "extra_course"
     }
 
+    private lateinit var activityDetailCourseBinding: ActivityDetailCourseBinding
     private lateinit var detailContentBinding: ContentDetailCourseBinding
+    private lateinit var viewModel: DetailCourseViewModel
+    private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(layoutInflater)
+        activityDetailCourseBinding = ActivityDetailCourseBinding.inflate(layoutInflater)
         detailContentBinding = activityDetailCourseBinding.detailContent
 
         setContentView(activityDetailCourseBinding.root)
@@ -39,7 +48,7 @@ class DetailCourseActivity : AppCompatActivity() {
         val adapter = DetailCourseAdapter()
 
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[DetailCourseViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
@@ -50,15 +59,30 @@ class DetailCourseActivity : AppCompatActivity() {
                 activityDetailCourseBinding.content.visibility = View.INVISIBLE
 
                 viewModel.setSelectedCourse(courseId)
-                viewModel.getModules().observe(this, { modules ->
-                    activityDetailCourseBinding.progressBar.visibility = View.GONE
-                    activityDetailCourseBinding.content.visibility = View.VISIBLE
+                viewModel.courseModule.observe(this, { courseWithModuleResource ->
+                    if (courseWithModuleResource != null) {
+                        when (courseWithModuleResource.status) {
+                            Status.LOADING -> activityDetailCourseBinding.progressBar.visibility =
+                                View.VISIBLE
+                            Status.SUCCESS -> if (courseWithModuleResource.data != null) {
+                                activityDetailCourseBinding.progressBar.visibility = View.GONE
+                                activityDetailCourseBinding.content.visibility = View.VISIBLE
 
-                    adapter.setModules(modules)
-                    adapter.notifyDataSetChanged()
+                                adapter.setModules(courseWithModuleResource.data.mModules)
+                                adapter.notifyDataSetChanged()
+                                populateCourse(courseWithModuleResource.data.mCourse)
+                            }
+                            Status.ERROR -> {
+                                activityDetailCourseBinding.progressBar.visibility = View.GONE
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Terjadi kesalahan",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
                 })
-                viewModel.getCourse().observe(this, { course -> populateCourse(course) })
-
             }
         }
 
@@ -67,7 +91,8 @@ class DetailCourseActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@DetailCourseActivity)
             setHasFixedSize(true)
             this.adapter = adapter
-            val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+            val dividerItemDecoration =
+                DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }
     }
@@ -75,19 +100,71 @@ class DetailCourseActivity : AppCompatActivity() {
     private fun populateCourse(courseEntity: CourseEntity) {
         detailContentBinding.textTitle.text = courseEntity.title
         detailContentBinding.textDescription.text = courseEntity.description
-        detailContentBinding.textDate.text = resources.getString(R.string.deadline_date, courseEntity.deadline)
+        detailContentBinding.textDate.text =
+            resources.getString(R.string.deadline_date, courseEntity.deadline)
 
         Glide.with(this)
-                .load(courseEntity.imagePath)
-                .transform(RoundedCorners(20))
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
-                        .error(R.drawable.ic_error))
-                .into(detailContentBinding.imagePoster)
+            .load(courseEntity.imagePath)
+            .transform(RoundedCorners(20))
+            .apply(
+                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                    .error(R.drawable.ic_error)
+            )
+            .into(detailContentBinding.imagePoster)
 
         detailContentBinding.btnStart.setOnClickListener {
             val intent = Intent(this@DetailCourseActivity, CourseReaderActivity::class.java)
             intent.putExtra(CourseReaderActivity.EXTRA_COURSE_ID, courseEntity.courseId)
             startActivity(intent)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        this.menu = menu
+
+        viewModel.courseModule.observe(this, { courseWithModel ->
+            if (courseWithModel != null) {
+                when (courseWithModel.status) {
+                    Status.LOADING -> activityDetailCourseBinding.progressBar.visibility =
+                        View.VISIBLE
+                    Status.SUCCESS -> if (courseWithModel.data != null) {
+                        activityDetailCourseBinding.progressBar.visibility =
+                            View.GONE
+                        val state = courseWithModel.data.mCourse.bookmarked
+                        setBookmarked(state)
+                    }
+                    Status.ERROR -> {
+                        activityDetailCourseBinding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            applicationContext,
+                            "Terjadi kesalahan",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        })
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_bookmark) {
+            viewModel.setBookmark()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBookmarked(state: Boolean) {
+        if (menu == null) return
+        val menuItem = menu?.findItem(R.id.action_bookmark)
+        if (state) {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmarked_white)
+        } else {
+            menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_bookmark_white)
+
         }
     }
 }

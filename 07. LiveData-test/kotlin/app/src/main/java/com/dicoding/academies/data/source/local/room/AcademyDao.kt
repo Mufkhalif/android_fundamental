@@ -3,6 +3,7 @@ package com.dicoding.academies.data.source.local.room
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.dicoding.academies.data.source.local.entity.CourseEntity
+import com.dicoding.academies.data.source.local.entity.CourseWithModule
 import com.dicoding.academies.data.source.local.entity.ModuleEntity
 
 @Dao
@@ -16,7 +17,7 @@ interface AcademyDao {
 
     @Transaction
     @Query("SELECT * FROM courseentities WHERE courseId = :courseId")
-    fun getCourseWithModuleById(courseId: String): LiveData<CourseEntity>
+    fun getCourseWithModuleById(courseId: String): LiveData<CourseWithModule>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCourses(course: List<CourseEntity>)
@@ -26,6 +27,9 @@ interface AcademyDao {
 
     @Query("SELECT *  FROM moduleentities WHERE courseId = :courseId")
     fun getModulesByCourseId(courseId: String): LiveData<List<ModuleEntity>>
+
+    @Query("SELECT *  FROM moduleentities WHERE moduleId = :moduleId")
+    fun getModuleById(moduleId: String): LiveData<ModuleEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertModules(module: List<ModuleEntity>)

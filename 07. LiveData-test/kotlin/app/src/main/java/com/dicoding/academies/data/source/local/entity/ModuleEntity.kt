@@ -11,7 +11,8 @@ import androidx.room.*
         parentColumns = ["courseId"],
         childColumns = ["courseId"]
     )],
-    indices = [Index(value = ["moduleId"]), Index(value = ["courseId"])]
+    indices = [Index(value = ["moduleId"]),
+        Index(value = ["courseId"])]
 )
 data class ModuleEntity(
     @NonNull
