@@ -9,18 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapps.R
 import com.example.movieapps.databinding.FragmentTvBinding
 import com.example.movieapps.viewmodel.ViewModelFactory
+import com.example.movieapps.vo.Status
 
 class TvFragment : Fragment() {
-    private lateinit var fragmentTvBinding: FragmentTvBinding
+    private var _fragmentTvBinding: FragmentTvBinding? = null
+    private val binding get() = _fragmentTvBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentTvBinding = FragmentTvBinding.inflate(layoutInflater, container, false)
-        return fragmentTvBinding.root
+        _fragmentTvBinding = FragmentTvBinding.inflate(layoutInflater, container, false)
+        return binding?.root
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -33,22 +36,35 @@ class TvFragment : Fragment() {
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[TvViewModel::class.java]
 
-            fragmentTvBinding.progressBar.visibility = View.VISIBLE
             viewModel.getTv().observe(viewLifecycleOwner, { tv ->
                 if (tv != null) {
-                    tvAdapter.setListTv(tv.results)
-                    tvAdapter.notifyDataSetChanged()
+                    when (tv.status) {
+                        Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            binding?.progressBar?.visibility = View.GONE
+                            tv.data?.let { tvAdapter.submitList(it) }
+                            tvAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            binding?.progressBar?.visibility = View.GONE
+                            Toast.makeText(
+                                context,
+                                getString(R.string.network_error),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
-                fragmentTvBinding.progressBar.visibility = View.GONE
             })
 
-            with(fragmentTvBinding.rvTv) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = tvAdapter
-            }
+            binding?.rvTv?.layoutManager = LinearLayoutManager(context)
+            binding?.rvTv?.setHasFixedSize(true)
+            binding?.rvTv?.adapter = tvAdapter
         }
-
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentTvBinding = null
+    }
 }

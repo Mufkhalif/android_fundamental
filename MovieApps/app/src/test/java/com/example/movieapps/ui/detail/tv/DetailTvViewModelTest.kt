@@ -3,13 +3,13 @@ package com.example.movieapps.ui.detail.tv
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.movieapps.api.model.Tv
-import com.example.movieapps.data.remote.MovieRepositorySecond
+import com.example.movieapps.data.local.entity.Tv
+import com.example.movieapps.data.MovieRepositorySecond
 import com.example.movieapps.utils.DataDummy
+import com.example.movieapps.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -18,8 +18,9 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class DetailTvViewModelTest {
-    private val id = "550988"
     private lateinit var viewModel: DetailTvViewModel
+    private val dummyTv = DataDummy.generateTvs()[0]
+    private val tvId = dummyTv.id.toString()
 
     @get:Rule
     var instantTaskExecutor = InstantTaskExecutorRule()
@@ -28,32 +29,26 @@ class DetailTvViewModelTest {
     private lateinit var movieRepository: MovieRepositorySecond
 
     @Mock
-    private lateinit var observer: Observer<Tv>
+    private lateinit var observer: Observer<Resource<Tv>>
 
     @Before
     fun setUp() {
         viewModel = DetailTvViewModel(movieRepository)
+        viewModel.setSelectedTv(tvId)
     }
 
     @Test
     fun getTvDetail() {
-        val dummyTv = DataDummy.generateTvs()[0]
-        val tv = MutableLiveData<Tv>()
-        tv.value = dummyTv
+        val detailTv = Resource.success(dummyTv)
+        val tv = MutableLiveData<Resource<Tv>>()
+        tv.value = detailTv
 
-        `when`(movieRepository.getDetailTv(id)).thenReturn(tv)
-        val tvEntities = viewModel.getTvDetail(id).value
-        verify(movieRepository).getDetailTv(id)
-        assertNotNull(tvEntities)
+        `when`(
+            movieRepository.getDetailTv(tvId)
+        ).thenReturn(tv)
 
-        assertEquals(dummyTv.name, tvEntities?.name)
-        assertEquals(dummyTv.first_air_date, tvEntities?.first_air_date)
-        assertEquals(dummyTv.overview, tvEntities?.overview)
-        assertEquals(dummyTv.poster_path, tvEntities?.poster_path)
-        assertEquals(dummyTv.vote_average, tvEntities?.vote_average)
-        assertEquals(dummyTv.popularity, tvEntities?.popularity)
 
-        viewModel.getTvDetail(id).observeForever(observer)
-        verify(observer).onChanged(dummyTv)
+        viewModel.tv.observeForever(observer)
+        verify(observer).onChanged(detailTv)
     }
 }

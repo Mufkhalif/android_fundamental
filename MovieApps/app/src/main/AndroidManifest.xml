@@ -12,12 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApps"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.detail.tv.DetailTvActivity"></activity>
+        <activity android:name=".ui.detail.tv.DetailTvActivity" />
         <activity android:name=".ui.detail.movie.DetailMovieActivity" />
-        <activity android:name=".ui.home.HomeActivity">
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

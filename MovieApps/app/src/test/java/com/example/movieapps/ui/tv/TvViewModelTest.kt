@@ -3,10 +3,14 @@ package com.example.movieapps.ui.tv
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.movieapps.api.model.Status
+import androidx.paging.PagedList
+import com.example.movieapps.data.local.entity.Status
 import com.example.movieapps.api.response.ResponseTv
-import com.example.movieapps.data.remote.MovieRepositorySecond
+import com.example.movieapps.data.MovieRepositorySecond
+import com.example.movieapps.data.local.entity.Movie
+import com.example.movieapps.data.local.entity.Tv
 import com.example.movieapps.utils.DataDummy
+import com.example.movieapps.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
 import org.junit.Test
@@ -20,14 +24,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TvViewModelTest {
     private lateinit var viewModel: TvViewModel
-    private var dummyTvs = DataDummy.generateTvs()
-
-    private val dummyResponseTv = ResponseTv(
-        10,
-        dummyTvs,
-        20,
-        Status(true)
-    )
 
     @get:Rule
     var instantTaskExecutor = InstantTaskExecutorRule()
@@ -36,7 +32,10 @@ class TvViewModelTest {
     private lateinit var movieRepository: MovieRepositorySecond
 
     @Mock
-    private lateinit var observer: Observer<ResponseTv>
+    private lateinit var observer: Observer<Resource<PagedList<Tv>>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<Tv>
 
     @Before
     fun setUp() {
@@ -45,20 +44,19 @@ class TvViewModelTest {
 
     @Test
     fun getTvs() {
-        val tvResult = MutableLiveData<ResponseTv>()
-        tvResult.value = dummyResponseTv
+        val dummyTvs = Resource.success(pagedList)
+        `when`(dummyTvs.data?.size).thenReturn(5)
+        val tvs = MutableLiveData<Resource<PagedList<Tv>>>()
+        tvs.value = dummyTvs
 
-        `when`(movieRepository.getTvs()).thenReturn(tvResult)
-        val tvEntities = viewModel.getTv().value
+        `when`(movieRepository.getTvs()).thenReturn(tvs)
+        val tvEntities = viewModel.getTv().value?.data
         verify(movieRepository).getTvs()
         assertNotNull(tvEntities)
-        assertEquals(dummyResponseTv.page, tvEntities?.page)
-        assertEquals(dummyResponseTv.results.size, tvEntities?.results?.size)
-        assertEquals(dummyResponseTv.total_results, tvEntities?.total_results)
-        assertEquals(dummyResponseTv.success.status, tvEntities?.success?.status)
+        assertEquals(5, tvEntities?.size)
 
         viewModel.getTv().observeForever(observer)
-        verify(observer).onChanged(dummyResponseTv)
+        verify(observer).onChanged(dummyTvs)
     }
 
 }

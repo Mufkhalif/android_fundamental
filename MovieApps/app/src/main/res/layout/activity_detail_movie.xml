@@ -11,12 +11,12 @@
         android:id="@+id/cv_poster"
         android:layout_width="match_parent"
         android:layout_height="360dp"
+        android:contentDescription="@string/img_desc"
         android:scaleType="centerCrop"
         android:src="@color/placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_title"

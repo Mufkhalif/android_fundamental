@@ -3,34 +3,41 @@ package com.example.movieapps.ui.tv
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapps.R
 import com.example.movieapps.api.Constants
-import com.example.movieapps.api.model.Tv
+import com.example.movieapps.data.local.entity.Tv
 import com.example.movieapps.databinding.ItemTvBinding
 import com.example.movieapps.ui.detail.tv.DetailTvActivity
 
-class TvAdapter : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
-    private val listTv = ArrayList<Tv>()
+class TvAdapter : PagedListAdapter<Tv, TvAdapter.TvViewHolder>(DIFF_CALLBACK) {
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Tv>() {
+            override fun areItemsTheSame(oldItem: Tv, newItem: Tv): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    fun setListTv(tv: List<Tv>) {
-        this.listTv.clear()
-        this.listTv.addAll(tv)
+            override fun areContentsTheSame(oldItem: Tv, newItem: Tv): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvAdapter.TvViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvViewHolder {
         val binding = ItemTvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TvAdapter.TvViewHolder, position: Int) {
-        val tv = listTv[position]
-        holder.bind(tv)
+    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
+        val tv = getItem(position)
+        if (tv != null) {
+            holder.bind(tv)
+        }
     }
-
-    override fun getItemCount(): Int = listTv.size
 
     class TvViewHolder(private val binding: ItemTvBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tv: Tv) {

@@ -1,7 +1,7 @@
 package com.example.movieapps.utils
 
-import com.example.movieapps.api.model.Movie
-import com.example.movieapps.api.model.Tv
+import com.example.movieapps.data.local.entity.Movie
+import com.example.movieapps.data.local.entity.Tv
 
 object DataDummy {
 
@@ -17,7 +17,8 @@ object DataDummy {
                 7783.635,
                 7.9,
                 2227,
-                "https://www.themoviedb.org/t/p/original/xmbU4JTUm8rsdtn7Y3Fcm30GpeT.jpg"
+                "https://www.themoviedb.org/t/p/original/xmbU4JTUm8rsdtn7Y3Fcm30GpeT.jpg",
+                false
             )
         )
 
@@ -30,7 +31,8 @@ object DataDummy {
                 4586.342,
                 18.0,
                 120,
-                "https://www.themoviedb.org/t/p/original/uIXF0sQGXOxQhbaEaKOi2VYlIL0.jpg"
+                "https://www.themoviedb.org/t/p/original/uIXF0sQGXOxQhbaEaKOi2VYlIL0.jpg",
+                false
             )
         )
 
@@ -43,7 +45,8 @@ object DataDummy {
                 2586.342,
                 18.0,
                 120,
-                "https://www.themoviedb.org/t/p/original/nLanxl7Xhfbd5s8FxPy8jWZw4rv.jpg"
+                "https://www.themoviedb.org/t/p/original/nLanxl7Xhfbd5s8FxPy8jWZw4rv.jpg",
+                false
             )
         )
 
@@ -56,7 +59,8 @@ object DataDummy {
                 5586.342,
                 28.0,
                 150,
-                "https://www.themoviedb.org/t/p/original/xeItgLK9qcafxbd8kYgv7XnMEog.jpg"
+                "https://www.themoviedb.org/t/p/original/xeItgLK9qcafxbd8kYgv7XnMEog.jpg",
+                false
             )
         )
 
@@ -69,7 +73,8 @@ object DataDummy {
                 5586.342,
                 28.0,
                 150,
-                "https://www.themoviedb.org/t/p/original/vclShucpUmPhdAOmKgf3B3Z4POD.jpg"
+                "https://www.themoviedb.org/t/p/original/vclShucpUmPhdAOmKgf3B3Z4POD.jpg",
+                false
             )
         )
 
@@ -82,7 +87,8 @@ object DataDummy {
                 2586.342,
                 1238.0,
                 8472,
-                "https://www.themoviedb.org/t/p/original/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg"
+                "https://www.themoviedb.org/t/p/original/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
+                false
             )
         )
 
@@ -95,7 +101,8 @@ object DataDummy {
                 6586.342,
                 128.0,
                 250,
-                "https://www.themoviedb.org/t/p/original/5VJSIAhSn4qUsg5nOj4MhQhF5wQ.jpg"
+                "https://www.themoviedb.org/t/p/original/5VJSIAhSn4qUsg5nOj4MhQhF5wQ.jpg",
+                false
             )
         )
 
@@ -108,7 +115,8 @@ object DataDummy {
                 3586.342,
                 228.0,
                 350,
-                "https://www.themoviedb.org/t/p/original/qKxrBZ8Ts4KHZKp7BT6GAVMLFO2.jpg"
+                "https://www.themoviedb.org/t/p/original/qKxrBZ8Ts4KHZKp7BT6GAVMLFO2.jpg",
+                false
             )
         )
 
@@ -121,7 +129,8 @@ object DataDummy {
                 1259.968,
                 228.0,
                 650,
-                "https://www.themoviedb.org/t/p/original/kb4s0ML0iVZlG6wAKbbs9NAm6X.jpg"
+                "https://www.themoviedb.org/t/p/original/kb4s0ML0iVZlG6wAKbbs9NAm6X.jpg",
+                false
             )
         )
 
@@ -134,7 +143,8 @@ object DataDummy {
                 4259.968,
                 228.0,
                 650,
-                "https://www.themoviedb.org/t/p/original/vFIHbiy55smzi50RmF8LQjmpGcx.jpg"
+                "https://www.themoviedb.org/t/p/original/vFIHbiy55smzi50RmF8LQjmpGcx.jpg",
+                false
             )
         )
 
@@ -154,6 +164,7 @@ object DataDummy {
                 8.0,
                 90,
                 "https://www.themoviedb.org/t/p/original/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg",
+                false
             )
         )
 
@@ -167,6 +178,7 @@ object DataDummy {
                 8.0,
                 190,
                 "https://www.themoviedb.org/t/p/original/8j12tohv1NBZNmpU93f47sAKBbw.jpg",
+                false
             )
         )
 
@@ -180,6 +192,7 @@ object DataDummy {
                 6.0,
                 90,
                 "https://www.themoviedb.org/t/p/original/2cMy9qphoOLJjYJJJQBBul0d94q.jpg",
+                false
             )
         )
 
@@ -194,6 +207,7 @@ object DataDummy {
                 8.0,
                 190,
                 "https://www.themoviedb.org/t/p/original/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg",
+                false
             )
         )
 
@@ -208,8 +222,8 @@ object DataDummy {
                 6.0,
                 290,
                 "https://www.themoviedb.org/t/p/original/ekZobS8isE6mA53RAiGDG93hBxL.jpg",
-
-                )
+                false
+            )
         )
 
         tv.add(
@@ -222,6 +236,7 @@ object DataDummy {
                 6.0,
                 390,
                 "https://www.themoviedb.org/t/p/original/ldV2Ej7T0E37zq4rtVVeGB9V6iJ.jpg",
+                false
             )
         )
 
@@ -235,6 +250,7 @@ object DataDummy {
                 8.2,
                 145000,
                 "https://www.themoviedb.org/t/p/original/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+                false
             )
         )
 
@@ -248,6 +264,7 @@ object DataDummy {
                 8.2,
                 125000,
                 "https://www.themoviedb.org/t/p/original/wRbjVBdDo5qHAEOVYoMWpM58FSA.jpg",
+                false
             )
         )
 
@@ -261,6 +278,7 @@ object DataDummy {
                 7.2,
                 25000,
                 "https://www.themoviedb.org/t/p/original/w21lgYIi9GeUH5dO8l3B9ARZbCB.jpg",
+                false
             )
         )
 
@@ -274,10 +292,10 @@ object DataDummy {
                 7.2,
                 15500,
                 "https://www.themoviedb.org/t/p/original/9Gkcvdz89Q7w0glDDga1c8m5vaW.jpg",
+                false
             )
         )
 
         return tv
     }
-
 }

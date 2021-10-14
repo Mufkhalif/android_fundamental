@@ -1,4 +1,4 @@
-package com.example.movieapps.api.model
+package com.example.movieapps.data.local.entity
 
 data class Status(
     var status: Boolean,

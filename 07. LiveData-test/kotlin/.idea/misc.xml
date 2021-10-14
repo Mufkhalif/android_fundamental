@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.37916666666666665" />
         <entry key="app/src/main/res/drawable/bg_button.xml" value="0.36875" />
+        <entry key="app/src/main/res/drawable/ic_bookmark_selector.xml" value="0.2984375" />
         <entry key="app/src/main/res/layout-sw600dp/activity_course_reader.xml" value="0.264453125" />
         <entry key="app/src/main/res/layout/activity_course_reader.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/fragment_academy.xml" value="0.17708333333333334" />

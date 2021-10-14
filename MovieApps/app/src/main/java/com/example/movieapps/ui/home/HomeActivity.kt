@@ -19,3 +19,4 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
     }
 }
+

@@ -5,28 +5,28 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapps.R
 import com.example.movieapps.databinding.FragmentMovieBinding
 import com.example.movieapps.viewmodel.ViewModelFactory
-
+import com.example.movieapps.vo.Status
 
 class MovieFragment : Fragment() {
-
-    companion object {
-        private const val TAG = "MovieFragment"
-    }
-
-    private lateinit var fragmentMovieBinding: FragmentMovieBinding
+    private var _fragmentMovieBinding: FragmentMovieBinding? = null
+    private val binding get() = _fragmentMovieBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
-        return fragmentMovieBinding.root
+    ): View? {
+        setHasOptionsMenu(true)
+        _fragmentMovieBinding = FragmentMovieBinding.inflate(layoutInflater, container, false)
+        return binding?.root
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -35,28 +35,45 @@ class MovieFragment : Fragment() {
 
         if (activity != null) {
             val movieAdapter = MovieAdapter()
-
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
-            fragmentMovieBinding.progressBar.visibility = View.VISIBLE
-            viewModel.getMovies().observe(viewLifecycleOwner, { movie ->
-                Log.d(TAG, movie.toString())
-
-                if (movie != null) {
-                    movieAdapter.setMovies(movie.results)
-                    movieAdapter.notifyDataSetChanged()
+            viewModel.getMovies().observe(viewLifecycleOwner, { movies ->
+                if (movies != null) {
+                    when (movies.status) {
+                        Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
+                        Status.SUCCESS -> {
+                            binding?.progressBar?.visibility = View.GONE
+                            movies.data?.let { movieAdapter.submitList(it) }
+                        }
+                        Status.ERROR -> {
+                            binding?.progressBar?.visibility = View.GONE
+                            Toast.makeText(
+                                context,
+                                getString(R.string.network_error),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
-
-                fragmentMovieBinding.progressBar.visibility = View.GONE
             })
 
-            with(fragmentMovieBinding.rvMovies) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = movieAdapter
-            }
+            binding?.rvMovies?.layoutManager = LinearLayoutManager(context)
+            binding?.rvMovies?.setHasFixedSize(true)
+            binding?.rvMovies?.adapter = movieAdapter
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _fragmentMovieBinding = null
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_movie -> Log.d("optionmenu","movie")
+            R.id.action_tv -> Log.d("optionmenu","tv")
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.movieapps.api.response
 
-import com.example.movieapps.api.model.Movie
+import com.example.movieapps.data.local.entity.Movie
 
 data class ResponseMovie(
     var page: Int,
